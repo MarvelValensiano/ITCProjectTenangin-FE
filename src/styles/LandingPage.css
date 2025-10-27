@@ -44,13 +44,20 @@
 }
 
 #LPBtn1{
-    color: white;
     border: 0;
     background: linear-gradient(90deg,rgba(127, 219, 202, 1) 0%, rgba(135, 206, 235, 1) 100%);
 }
 
+#LPBtn1 a{
+    color: white;    
+}
+
 #LPBtn2{
     border: solid 2px #87CEEB;
-    color: #87CEEB;
+
     background: none;
+}
+
+#LPBtn2 a{
+    color: #87CEEB;
 }

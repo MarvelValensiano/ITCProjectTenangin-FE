@@ -1,18 +1,21 @@
 hr{
-    margin: 20px 0;
+    margin: 0;
     border: solid 1.5px #87CEEB;
 }
 
 .siteInfoA{
     padding: 16px;
     margin: 25px;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 .SIACont{
+    margin: 25px 0;
     display: flex;
     gap: 20px;
     justify-content: space-between;
-    margin-bottom: 80px;
+    margin-bottom: 100px;
     flex-wrap: wrap
 }
 
@@ -62,7 +65,7 @@ hr{
     width: 100%;
 }
 
-.SIACont4 p, .SIACont1 p, .SIACont2 a{
+.SIACont4 p, .SIACont1 p, .SIACont2 a, .SIACont3 a{
     color: #4B5563;
 }
 
@@ -76,7 +79,7 @@ hr{
     width: 100%;
     height: 42px;
     margin: 0;
-    padding: 0;
+    padding: 0 15px;
     border-radius: 12px 0 0 12px;
     border: solid 1px #D1D5DB;
 }
@@ -102,7 +105,10 @@ hr{
 .SIACont4 input::placeholder {
   color: #ADAEBC;
   font-size: 16px;
-  padding: 15px;
+}
+
+.SIACont4 input:focus {
+  outline: none;
 }
 
 

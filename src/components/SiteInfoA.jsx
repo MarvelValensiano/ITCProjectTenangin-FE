@@ -27,16 +27,16 @@ function SiteInfoA() {
                     <h7>Contact Info</h7>
                     <ul>
                         <li>
-                            <img src="./public/mail.png"></img>
-                            <p>hello@tenangin.com</p>
+                            <img src="./public/mail.png" alt="Mail icon" />
+                            <a href="mailto:hello@tenangin.com">hello@tenangin.com</a>
                         </li>
                         <li>
-                            <img src="./public/insta.png"></img>
-                            <p>@tenangin_official</p>
+                            <img src="./public/insta.png" alt="Instagram icon" />
+                            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">@tenangin_official</a>
                         </li>
                         <li>
-                            <img src="./public/linkedin.png"></img>
-                            <p>TENANGIN Team</p>
+                            <img src="./public/linkedin.png" alt="LinkedIn icon" />
+                            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">TENANGIN Team</a>
                         </li>
                     </ul>
                 </div>
