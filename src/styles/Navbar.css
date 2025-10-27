@@ -11,6 +11,7 @@ a{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .wrapper a{
@@ -23,11 +24,6 @@ nav{
     margin: 25px;
 }
 
-.menu a{
-    color: black;
-    font-size: 20px;
-}
-
 .logo{
     display: flex;
     align-items: center;
@@ -37,16 +33,21 @@ nav{
 }
 
 .logo a{
-    color: black;    
+    color: #1F2937;   
+    font-weight: 700; 
 }
 
 .logo img{
     width: 40px;
 }
 
+.menu a{
+    color: #374151;
+    font-size: 20px;
+    font-weight: 500;
+}
 .menu ul{
     display: flex;
-    list-style: none;
     gap: 30px;
     align-items: center;
 }
@@ -54,11 +55,18 @@ nav{
 .menu button{
     border-radius: 30px;
     border: 0;
-    padding: 10px 20px;
+    width: 168px;
+    height: 48px;
     background: linear-gradient(90deg,rgba(127, 219, 202, 1) 0%, rgba(135, 206, 235, 1) 100%);
 }
 
 .menu button a{
-    color: white;    
+    color: white;  
+    font-size: 16px;
+
+}
+
+ul{
+    list-style: none;
 }
 
