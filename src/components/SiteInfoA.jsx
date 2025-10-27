@@ -44,8 +44,8 @@ function SiteInfoA() {
                     <h7>Stay Connected</h7>
                     <p>Get daily motivation in your inbox</p>
                     <form>
-                        <input type='email' placeholder='Your email'></input>
-                        <button><img src='./public/send.png'></img></button>
+                        <input type='email' name='email' placeholder='Your email'></input>
+                        <button type='submit'><img src='./public/send.png'></img></button>
                     </form>
                 </div>
             </div>
