@@ -36,21 +36,59 @@
     font-weight: 600;
     padding: 20px 30px;
     border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .LPbutton{
     display: flex;
     gap: 20px;
+    height: 64px;
 }
 
-#LPBtn1{
-    color: white;
+#LPBtn1 {
     border: 0;
-    background: linear-gradient(90deg,rgba(127, 219, 202, 1) 0%, rgba(135, 206, 235, 1) 100%);
+    background: linear-gradient(90deg, rgba(127, 219, 202, 1) 0%, rgba(135, 206, 235, 1) 100%);
+    transition: background 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 30px;
 }
 
-#LPBtn2{
-    border: solid 2px #87CEEB;
-    color: #87CEEB;
-    background: none;
+#LPBtn1 a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.4s ease;
 }
+
+#LPBtn1:hover {
+    background: linear-gradient(90deg, rgba(135, 206, 235, 1) 0%, rgba(135, 206, 235, 1) 100%);
+}
+
+
+#LPBtn2 {
+    border: 2px solid #87CEEB;
+    background: none;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 30px;
+}
+
+#LPBtn2 a {
+    color: #87CEEB;
+    text-decoration: none;
+    transition: color 0.4s ease;
+}
+
+#LPBtn2:hover {
+    background-color: #87CEEB;
+}
+
+#LPBtn2:hover a {
+    color: #ffffff;
+}
+

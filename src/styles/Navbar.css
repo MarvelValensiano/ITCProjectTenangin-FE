@@ -45,25 +45,40 @@ nav{
     color: #374151;
     font-size: 20px;
     font-weight: 500;
+    transition: all 0.3s ease;
 }
+
+.menu a:hover{
+    color: rgba(135, 206, 235, 1);
+}
+
+.menu button a:hover{
+    color: #ffffff
+}
+
 .menu ul{
     display: flex;
     gap: 30px;
     align-items: center;
 }
 
-.menu button{
+.menu button {
     border-radius: 30px;
     border: 0;
     width: 168px;
     height: 48px;
-    background: linear-gradient(90deg,rgba(127, 219, 202, 1) 0%, rgba(135, 206, 235, 1) 100%);
+    background: linear-gradient(90deg, rgba(127, 219, 202, 1) 0%, rgba(135, 206, 235, 1) 100%);
+    transition: all 0.4s ease;
+}
+
+.menu button:hover {
+    background: linear-gradient(90deg, rgba(135, 206, 235, 1) 0%, rgba(135, 206, 235, 1) 100%);
+    transform: scale(1.03);
 }
 
 .menu button a{
     color: white;  
     font-size: 16px;
-
 }
 
 ul{

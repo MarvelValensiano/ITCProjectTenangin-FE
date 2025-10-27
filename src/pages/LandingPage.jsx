@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar"
 import "../styles/LandingPage.css"
 import SiteInfoA from "../components/SiteInfoA"
+import Footer from "../components/footer"
 
 function LandingPage() {
   return (
@@ -16,13 +17,14 @@ function LandingPage() {
             brightens your day.
           </p>
           <div className="LPbutton">
-            <button id="LPBtn1">Check Your Mood</button>
-            <button id="LPBtn2">Learn More</button>
+            <button id="LPBtn1"><a href="">Check Your Mood</a></button>
+            <button id="LPBtn2"><a href="">Learn More</a></button>
           </div>
         </div>
         <div className="LPCont2"></div>
       </div>
       <SiteInfoA />
+      <Footer />
     </>
   )
 }
