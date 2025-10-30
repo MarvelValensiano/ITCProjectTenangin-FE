@@ -6,6 +6,7 @@ import Footer from "../components/footer"
 function LandingPage() {
   return (
     <>
+    <div style={{ background: 'linear-gradient(0deg, #ffffff 0%, #D9EFF7 100%)'}}>
       <Navbar />
       <div className="LPcontent">
         <div className="LPCont1">
@@ -24,7 +25,9 @@ function LandingPage() {
         <div className="LPCont2"></div>
       </div>
       <SiteInfoA />
-      <Footer />
+      <Footer />      
+    </div>
+
     </>
   )
 }
