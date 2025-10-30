@@ -6,6 +6,11 @@
 .LPcontent{
     padding: 16px;
     margin: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 60px;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .LPCont1{
@@ -90,5 +95,10 @@
 
 #LPBtn2:hover a {
     color: #ffffff;
+}
+
+.LPCont2 img{
+    max-width: 557px;
+    width: 100%;
 }
 

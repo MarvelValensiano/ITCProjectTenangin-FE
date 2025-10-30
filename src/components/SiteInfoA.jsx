@@ -1,4 +1,5 @@
 import '../styles/SiteInfoA.css'
+import { Link } from 'react-router-dom'
 
 function SiteInfoA() {
   return (
@@ -17,26 +18,26 @@ function SiteInfoA() {
                 <div className="SIACont2">
                     <h7>Quick Links</h7>
                     <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#checkMood">Mood Tracker</a></li>
-                        <li><a href="#videos">Videos</a></li>
-                        <li><a href="#about">About</a></li>
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="/">Check Mood</Link></li>
+                        <li><Link to="/">Videos</Link></li>
+                        <li><Link to="/about">About</Link></li>
                     </ul>
                 </div>    
                 <div className="SIACont3">
                     <h7>Contact Info</h7>
                     <ul>
-                        <li>
-                            <img src="./public/mail.png" alt="Mail icon" />
-                            <a href="mailto:hello@tenangin.com">hello@tenangin.com</a>
+                        <li>   
+                            <a href="mailto:hello@tenangin.com">
+                            <img src="./src/assets/site info/mail.svg" alt="Mail icon" />hello@tenangin.com</a>
                         </li>
                         <li>
-                            <img src="./public/insta.png" alt="Instagram icon" />
-                            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">@tenangin_official</a>
+                            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                            <img src="./src/assets/site info/insta.svg" alt="Instagram icon" />@tenangin_official</a>
                         </li>
                         <li>
-                            <img src="./public/linkedin.png" alt="LinkedIn icon" />
-                            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">TENANGIN Team</a>
+                            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                            <img src="./src/assets/site info/linkedin.svg" alt="LinkedIn icon" />TENANGIN Team</a>
                         </li>
                     </ul>
                 </div>
@@ -45,7 +46,7 @@ function SiteInfoA() {
                     <p>Get daily motivation in your inbox</p>
                     <form>
                         <input type='email' name='email' placeholder='Your email'></input>
-                        <button type='submit'><img src='./public/send.png'></img></button>
+                        <button type='submit'><img src='./src/assets/site info/send.svg'></img></button>
                     </form>
                 </div>
             </div>

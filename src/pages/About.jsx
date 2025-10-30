@@ -3,6 +3,10 @@ import SiteInfoA from "../components/SiteInfoA"
 import "../styles/About.css"
 import React from 'react'
 import Footer from "../components/footer"
+import HeartIcon from "../assets/about/heart.svg?react"
+import BrainIcon from "../assets/about/brain.svg?react"
+import LeafIcon from "../assets/about/leaf.svg?react"
+
 
 function Desc() {
   return (
@@ -14,7 +18,7 @@ function Desc() {
         <button><a href="">Explore Our Features</a></button>
       </div>
       <div className="descImg">
-        <img src="src/assets/descImage.png" alt="" />
+        <img src="src/assets/about/descImage.svg" alt="" />
       </div>
     </div>
   )
@@ -28,9 +32,9 @@ function Mission() {
         <p>
           We believe that taking care of your mental health should be easy, supportive, and stigma-free. TENANGIN was created to promote awareness and positivity through mood tracking, motivational content, and education.
         </p>
-        <img src="../src/assets/heart.png" alt="heart" className="iconLeft" />
-        <img src="../src/assets/leaf.png" alt="leaf" className="iconBottom" />
-        <img src="../src/assets/brain.png" alt="brain" className="iconRight" />
+        <img src="../src/assets/about/heart.svg" alt="heart" className="iconLeft" />
+        <img src="../src/assets/about/leaf.svg" alt="leaf" className="iconBottom" />
+        <img src="../src/assets/about/brain.svg" alt="brain" className="iconRight" />
       </div>
     </section>
   )
@@ -42,7 +46,7 @@ function SDG3() {
       <h2>Supporting Global Well-being</h2>
       <div className="SDG3Content">
         <div className="SDG3Img">
-          <img src="../src/assets/SDG3.png" alt="" />
+          <img src="../src/assets/about/SDG3Img.svg" alt="" />
         </div>        
         <div className="SDG3Text">
           <h3>Sustainable Development Goal 3</h3>
@@ -94,6 +98,58 @@ function TenanginTeam() {
   )
 }
 
+function Purpose() {
+  return (
+    <div className="purpose">
+      <h2>Together for Better Mental Health</h2>
+      <p>TENANGIN is not just a website — it's a reminder that taking care of your mind matters. Every small step toward emotional balance is a victory worth celebrating.</p>
+      <img src="../src/assets/about/purposeImg.svg" alt="" />
+    </div>
+  )
+}
+
+function Feedback() {
+  return (
+    <div className="feedback">
+      <h2>Get in Touch</h2>
+      <p>We'd love to hear your feedback or collaboration ideas.</p>
+      <div className="feedbackBox">
+        <form className="messageForm">
+          <h3>Send us a message</h3>
+          <input type="text" placeholder="Your Name"/>
+          <input type="email" placeholder="Your E-mail"/>
+          <textarea placeholder="Your Message"/>
+          <button type="submit"> Send Message</button>
+        </form>
+        <div className="socmed">
+          <h3>Connect with us</h3>
+          <ul>
+            <li>
+              <a href="mailto:hello@tenangin.com">
+                  <div id="mail"><img src="./src/assets/about/mail.svg" alt="Mail icon" /></div>
+                  <p>hello@tenangin.com</p>
+                </a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com" target="_blank">
+                <div id="insta"><img src="./src/assets/about/insta.svg" alt="Instagram icon" /></div>
+                <p>@tenangin_official</p>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com" target="_blank">
+                <div id="linkedin"><img src="./src/assets/about/linkedin.svg" alt="LinkedIn icon" /></div>
+                <p>TENANGIN Team</p>
+              </a>
+            </li>
+          </ul>
+          <hr />
+          <p>Follow us on social media for daily motivation, mental health tips, and community updates.</p>          
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function About() {
   return (
@@ -103,6 +159,8 @@ function About() {
       <Mission />
       <SDG3 />
       <TenanginTeam />
+      <Purpose />
+      <Feedback />
     </div>
   );
 }
