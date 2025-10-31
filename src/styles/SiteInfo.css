@@ -31,7 +31,7 @@
     flex-wrap: wrap
 }
 
-.siteInfoContent h7{
+.siteInfoContent h6{
     font-size: 16px;
     font-weight: 600;
     color: #1F2937;
@@ -140,7 +140,7 @@
     align-items: center;
     background: linear-gradient(90deg, #B8E6B8 0%, #A8D8EA 100%);
     transition: all 0.4s ease;
-
+    cursor: pointer;
 }
 
 .inboxEmail form button:hover{
