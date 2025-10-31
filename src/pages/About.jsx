@@ -1,12 +1,7 @@
 import Navbar from "../components/Navbar"
-import SiteInfoA from "../components/SiteInfoA"
+import {SiteInfoB } from '../components/SiteInfo'
 import "../styles/About.css"
-import React from 'react'
-import Footer from "../components/footer"
-import HeartIcon from "../assets/about/heart.svg?react"
-import BrainIcon from "../assets/about/brain.svg?react"
-import LeafIcon from "../assets/about/leaf.svg?react"
-
+import Footer from "../components/Footer"
 
 function Desc() {
   return (
@@ -160,7 +155,9 @@ function About() {
       <SDG3 />
       <TenanginTeam />
       <Purpose />
-      <Feedback />
+      <Feedback />  
+      <SiteInfoB />
+      <Footer />
     </div>
   );
 }

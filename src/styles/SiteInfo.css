@@ -1,6 +1,11 @@
-hr{
+.siteInfoA hr{
     margin: 0;
     border: solid 1.5px #87CEEB;
+}
+
+.siteInfoB hr{
+    margin: 0;
+    border: solid 1.5px #E5E7EB;
 }
 
 .siteInfoA{
@@ -10,77 +15,110 @@ hr{
     padding-bottom: 0;
 }
 
-.SIACont{
+.siteInfoB{
+    padding: 16px;
+    margin: 100px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.siteInfoContent{
     margin: 25px 0;
     display: flex;
-    gap: 20px;
+    gap: 50px;
     justify-content: space-between;
     margin-bottom: 100px;
     flex-wrap: wrap
 }
 
-.SIACont h7{
+.siteInfoContent h7{
     font-size: 16px;
     font-weight: 600;
     color: #1F2937;
 }
 
-.SIACont1, .SIACont2, .SIACont3, .SIACont4{
+.logoJargon, .quickLinks, .contactInfo, .inboxEmail{
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-.SIACont2 li, .SIACont3 li{
+.quickLinks li, .contactInfo li{
     color: #4B5563;
 }
 
-.SIACont2 ul, .SIACont3 ul{
+.quickLinks ul, .contactInfo ul{
     padding: 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.SIACont1{
+.logoJargon{
     max-width: 284px;
     width: 100%;
 }
 
-.SIACont2{
+.quickLinks{
     max-width: 284px;
     width: 100%;
 }
 
-.SIACont3{
+.contactInfo, .contactInfo2{
     max-width: 284px;
     width: 100%;
 }
 
-.SIACont3 img{
+.contactInfo img{
     margin-right: 8px;
 }
 
-.SIACont4{
-    max-width: 414px;
-    width: 100%;
+.siteInfoB .siteInfoContent{
+    justify-content: space-between;
+    gap: 100px;
 }
 
-.SIACont4 p, .SIACont1 p, .SIACont2 a, .SIACont3 a{
+.contactInfo2 img{
+    height: 14px;
+    width: 16px;
+    margin-right: 14px;
+    filter: grayscale(0.5) brightness(0.80) hue-rotate(120deg);
+    transition: all 0.3s ease;
+}
+
+.contactInfo2 img:hover{
+    filter: grayscale(0) brightness(1) hue-rotate(70deg);
+}
+
+.inboxEmail{
+    width: 414px;
+}
+
+.inboxEmail p, .logoJargon p, .quickLinks a, .contactInfo a, .contactInfo2 a{
     color: #4B5563;
     transition: all 0.3s ease;
 }
 
-.SIACont2 a:hover, .SIACont3 a:hover{
+.quickLinks a:hover, .contactInfo a:hover, .contactInfo2 a:hover{
     color: #7FDBCA;
 }
 
-.SIACont4 form{
+.contactInfo2{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contactInfo2 p{
+    margin-top: 6px;
+}
+
+.inboxEmail form{
     display: flex;
     align-items: center;
 }
 
-.SIACont4 form input{
+.inboxEmail form input{
     max-width: 350px;
     width: 100%;
     height: 42px;
@@ -90,7 +128,7 @@ hr{
     border: solid 1px #D1D5DB;
 }
 
-.SIACont4 form button{
+.inboxEmail form button{
     max-width: 64px;
     width: 100%;
     height: 44px;
@@ -105,21 +143,21 @@ hr{
 
 }
 
-.SIACont4 form button:hover{
+.inboxEmail form button:hover{
     background: linear-gradient(90deg, #A8D8EA 0%, #A8D8EA 100%);
 }
 
-.SIACont4 img{
+.inboxEmail img{
     width: 16px;
     height: 23px;
 }
 
-.SIACont4 input::placeholder {
+.inboxEmail input::placeholder {
   color: #ADAEBC;
   font-size: 16px;
 }
 
-.SIACont4 input:focus {
+.inboxEmail input:focus {
   outline: none;
 }
 

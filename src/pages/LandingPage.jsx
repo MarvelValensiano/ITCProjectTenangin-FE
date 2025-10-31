@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar"
 import "../styles/LandingPage.css"
-import SiteInfoA from "../components/SiteInfoA"
-import Footer from "../components/footer"
+import { SiteInfoA} from '../components/SiteInfo'
+import Footer from "../components/Footer"
 
 function LandingPage() {
   return (
