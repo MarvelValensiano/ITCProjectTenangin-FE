@@ -1,11 +1,10 @@
 import Navbar from "../components/Navbar"
 import "../styles/LandingPage.css"
-import SiteInfoA from "../components/SiteInfoA"
-import Footer from "../components/footer"
+import { SiteInfoA} from '../components/SiteInfo'
+import Footer from "../components/Footer"
 
 function LandingPage() {
   return (
-    <>
     <div style={{ background: 'linear-gradient(0deg, #ffffff 0%, #D9EFF7 100%)'}}>
       <Navbar />
       <div className="LPcontent">
@@ -22,13 +21,13 @@ function LandingPage() {
             <button id="LPBtn2"><a href="">Learn More</a></button>
           </div>
         </div>
-        <div className="LPCont2"></div>
+        <div className="LPCont2">
+          <img src="./src/assets/landing page/landingPage.svg" alt="" />
+        </div>
       </div>
       <SiteInfoA />
       <Footer />      
     </div>
-
-    </>
   )
 }
 
