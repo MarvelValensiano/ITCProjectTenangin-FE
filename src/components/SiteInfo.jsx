@@ -1,108 +1,144 @@
 import '../styles/SiteInfo.css'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 
 function LogoJargon() {
   return (
-    <div>
-        <div className="logoJargon">
-            <div className="logo">
-                <img src="./public/tenanginLogo.png"></img>
-                <a href="">TENANGIN</a>    
-            </div>
-            <p>Calm mind, happy life.</p>
-        </div>
+    <div className="logoJargon">
+      <div className="logo">
+        <img src="/tenanginLogo.png" alt="Tenangin logo" />
+        <a href="/">TENANGIN</a>    
+      </div>
+      <p>Calm mind, happy life.</p>
     </div>
   )
 }
 
 function QuickLinks() {
   return (
-    <div>
-        <div className="quickLinks">
-            <h7>Quick Links</h7>
-            <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/">Check Mood</Link></li>
-                <li><Link to="/">Videos</Link></li>
-                <li><Link to="/about">About</Link></li>
-            </ul>
-        </div>       
-    </div>
+    <div className="quickLinks">
+      <h6>Quick Links</h6>
+      <ul>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/CheckMood">Check Mood</Link></li>
+        <li><Link to="/">Videos</Link></li>
+        <li><Link to="/about">About</Link></li>
+      </ul>
+    </div>       
   )
 }
 
 function ContactInfo() {
   return (
-    <div>
-        <div className="contactInfo">
-            <h7>Contact Info</h7>
-            <ul>
-                <li>   
-                    <a href="mailto:hello@tenangin.com">
-                    <img src="./src/assets/site info/mail.svg" alt="Mail icon" />hello@tenangin.com</a>
-                </li>
-                <li>
-                    <a href="https://www.instagram.com" target="_blank">
-                    <img src="./src/assets/site info/insta.svg" alt="Instagram icon" />@tenangin_official</a>
-                </li>
-                <li>
-                    <a href="https://www.linkedin.com" target="_blank">
-                    <img src="./src/assets/site info/linkedin.svg" alt="LinkedIn icon" />TENANGIN Team</a>
-                </li>
-            </ul>
-        </div>      
-    </div>
+    <div className="contactInfo">
+      <h6>Contact Info</h6>
+      <ul>
+        <li>   
+          <a href="mailto:hello@tenangin.com">
+            <img src="/src/assets/site info/mail.svg" alt="Mail icon" />
+            hello@tenangin.com
+          </a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+            <img src="/src/assets/site info/insta.svg" alt="Instagram icon" />
+            @tenangin_official
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+            <img src="/src/assets/site info/linkedin.svg" alt="LinkedIn icon" />
+            TENANGIN Team
+          </a>
+        </li>
+      </ul>
+    </div>      
   )
 }
 
 function ContactInfo2() {
   return (
-    <div>
-        <div className="contactInfo2">
-            <h7>Contact Info</h7>
-            <a href="mailto:hello@tenangin.com"><p>hello@tenangin.com</p></a>
-            <div>
-                <a href="https://www.instagram.com" target="_blank">
-                <img src="./src/assets/site info/insta.svg" alt="Instagram icon" /></a>
-                <a href="https://www.linkedin.com" target="_blank">
-                <img src="./src/assets/site info/linkedin.svg" alt="LinkedIn icon" /></a>
-                <a href="mailto:hello@tenangin.com">
-                <img src="./src/assets/site info/mail.svg" alt="Mail icon" /></a>                
-            </div>
-
-        </div>      
-    </div>
+    <div className="contactInfo2">
+      <h7>Contact Info</h7>
+      <a href="mailto:hello@tenangin.com"><p>hello@tenangin.com</p></a>
+      <div className="contactIcons">
+        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+          <img src="/src/assets/site info/insta.svg" alt="Instagram icon" />
+        </a>
+        <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+          <img src="/src/assets/site info/linkedin.svg" alt="LinkedIn icon" />
+        </a>
+        <a href="mailto:hello@tenangin.com">
+          <img src="/src/assets/site info/mail.svg" alt="Mail icon" />
+        </a>
+      </div>
+    </div>      
   )
 }
 
 function InboxEmail() {
+  const [email, setEmail] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (!email) return alert("Please enter your email.")
+
+    setLoading(true)
+
+    try {
+      const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      })
+
+      if (response.ok) {
+        alert("Thank you for subscribing!")
+        setEmail('')
+      } else {
+        alert("Failed to send. Please try again.")
+      }
+    } catch (error) {
+      console.error("Error:", error)
+      alert("There was an error submitting your email.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
-    <div>
-        <div className="inboxEmail">
-            <h7>Stay Connected</h7>
-            <p>Get daily motivation in your inbox</p>
-            <form>
-                <input type='email' name='email' placeholder='Your email'></input>
-                <button type='submit'><img src='./src/assets/site info/send.svg'></img></button>
-            </form>
-        </div>      
-    </div>
+    <div className="inboxEmail">
+      <h7>Stay Connected</h7>
+      <p>Get daily motivation in your inbox</p>
+      <form onSubmit={handleSubmit}>
+        <input
+          type='email'
+          name='email'
+          placeholder='Your email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <button type='submit' disabled={loading}>
+          {loading ? "Sending..." : <img src='/src/assets/site info/send.svg' alt="Send" />}
+        </button>
+      </form>
+    </div>      
   )
 }
 
 export function SiteInfoA() {
   return (
-    <div>
-        <div className="siteInfoA">
-            <hr/>
-            <div className="siteInfoContent">
-                <LogoJargon className="logoJargon"/>
-                <QuickLinks className="quickLinks"/>
-                <ContactInfo className="contactInfo"/>
-                <InboxEmail className="inboxEmail"/>
-            </div>
-            <hr/>
-        </div>
+    <div className="siteInfoA">
+      <hr/>
+      <div className="siteInfoContent">
+        <LogoJargon />
+        <QuickLinks />
+        <ContactInfo />
+        <InboxEmail />
+      </div>
+      <hr/>
     </div>
   )
 }
@@ -110,16 +146,14 @@ export function SiteInfoA() {
 export function SiteInfoB() {
   return (
     <div className="siteInfoB">
-        <hr className="SIB"/>
-        <div className="siteInfoContent">
-            <LogoJargon />
-            <QuickLinks /> 
-            <div style={{ marginRight: "200px" }}>
-                <ContactInfo2 /> 
-            </div>
+      <hr className="SIB"/>
+      <div className="siteInfoContent">
+        <LogoJargon />
+        <QuickLinks /> 
+        <div style={{ marginRight: "200px" }}>
+          <ContactInfo2 /> 
         </div>
+      </div>
     </div>
   )
 }
-
-
