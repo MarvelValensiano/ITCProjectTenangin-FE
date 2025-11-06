@@ -177,6 +177,7 @@ color: #1F2937;
 
 .saveButton:hover {
   background: linear-gradient(90deg, rgba(135, 206, 235, 1) 0%, rgba(135, 206, 235, 1) 100%);
+  transform: scale(0.97);
 }
 
 .cancelButton {
