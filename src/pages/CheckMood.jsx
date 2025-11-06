@@ -1,6 +1,6 @@
-import Navbar from "../components/Navbar"
 import { useState } from "react"
 import "../styles/CheckMood.css"
+import NavbarAfterLogin from "../components/NavbarAfterLogin"
 
 function Emoji({ onSelect }) {
   const moods = [
@@ -90,7 +90,7 @@ function CheckMood() {
 
   return (
     <div className="checkMood">
-      <Navbar />
+      <NavbarAfterLogin />
       <div className="checkMoodContent">
         <Emoji onSelect={setSelectedMood} />
         <CheckMoodText />
