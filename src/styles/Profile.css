@@ -1,0 +1,135 @@
+.profile{
+    margin: 25px 41px;
+    margin-bottom: 121px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.profile h1{
+    font-family: Plus Jakarta Sans;
+    font-weight: 700;
+    font-size: 40px;
+    color: #1F2937;
+}
+
+.yourProfile, .profileDetails{
+    padding: 30px;
+    border: 1px solid #87CEEB;
+    border-radius: 32px;
+    background: #FFFFFF;
+}
+
+.yourProfile{
+    display: flex;
+    gap: 40px;
+}
+
+.yourProfile h3, .yourProfile h4, .yourProfile p{
+    font-family: plus jakarta sans;  
+    color: #1F2937;  
+}
+
+.avatar{
+    position: relative;
+    margin: 22px;
+    display: inline-block;
+}
+
+.fotoAvatar{
+    width: 96px;
+    border-radius: 100px;
+    object-fit: cover;
+}
+
+.iconEdit{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.iconEdit:hover{
+    filter: brightness(0.8);
+}
+
+
+.namaStatus{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.namaStatus h4{
+    font-family: Plus Jakarta Sans;
+    font-weight: 500;
+    font-size: 20px;
+    color: white;
+    background: linear-gradient(135deg, #B8E6B8 0%, #A8D8EA 70.71%);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.miniProfile{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.miniProfile h3{
+    font-size: 30px;
+}
+
+.miniProfile p{
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.detailsBox h5{
+font-family: Poppins;
+font-weight: 400;
+font-size: 14px;
+color: #6F6F6F;
+margin-bottom: 4px;
+}
+
+.detailsBox p{
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 16px;
+    color: #2B3A3A;
+}
+
+#PDTitle{
+    margin-top: 10px;
+}
+
+.detailsContent{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 50px;
+}
+
+.leftBox, .rightBox{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 370px;
+}
+
+.detailsBtn button{
+    width: 131px;
+    height: 48px;
+    border: none;
+    border-radius: 30px;
+    background: #FFE3D4;
+    transition: all 0.3s ease;
+}
+
+.detailsBtn button:hover{
+    transform: scale(0.97);
+}
