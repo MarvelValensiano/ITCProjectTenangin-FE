@@ -80,7 +80,7 @@ nav{
     filter: brightness(0.8);
 }
 
-.menu button {
+.menu button{
     border-radius: 30px;
     border: 0;
     width: 168px;
@@ -89,7 +89,7 @@ nav{
     transition: all 0.4s ease;
 }
 
-.menu button:hover {
+.menu button:hover{
     background: linear-gradient(90deg, rgba(135, 206, 235, 1) 0%, rgba(135, 206, 235, 1) 100%);
     transform: scale(0.97);
 }
