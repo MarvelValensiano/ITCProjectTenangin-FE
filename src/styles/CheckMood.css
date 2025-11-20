@@ -1,0 +1,190 @@
+.checkMood {
+  text-align: center;
+  background: linear-gradient(to bottom, #e7f4ff, #ffffff);
+}
+
+.checkMoodContent{
+  padding: 80px 41px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 60px;
+  align-items: center;
+  justify-content: center;
+}
+
+.emojiSection{
+  width: 728px;
+}
+
+.emojiSection h2 {
+  font-size: 30px;
+  margin-bottom: 25px;
+  font-weight: 600;
+  text-align: center;
+  color: #1F2937;
+}
+
+.emojiGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+.emojiCard {
+  background: white;
+  border-radius: 16px;
+  padding: 0px 16px 10px ;
+  width: 116px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.emojiCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  
+}
+
+.emojiCard.selected {
+  border: 2px solid #5da6ff;
+  background-color: #eaf3ff;
+}
+
+.emojiIcon {
+  font-size: 60px;
+  display: block;
+}
+
+.todaysFeeling textarea {
+  margin-top: 30px;
+  width: 80%;
+  height: 120px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  resize: none;
+  font-size: 1rem;
+}
+
+.selectedMood {
+  margin-top: 10px;
+  color: #333;
+}
+
+.checkMoodText {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkMoodText p, .checkMoodText h2{
+  font-family: plus jakarta sans;
+}
+
+.checkMoodText h2{
+  color: #1F2937;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.checkMoodText p{
+  color: #4B5563;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.checkMoodText img{
+  width: 123px;
+  height: 119px;
+}
+
+.todaysFeeling {
+  width: 90%;
+  max-width: 700px;
+  margin: 60px auto;
+  margin-top: 0;
+}
+
+.todaysFeeling form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.TFTextCont {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.119);
+  padding: 30px 30px 25px 30px;
+  margin-bottom: 40px;
+}
+
+.TFTextCont textarea {
+  width: 100%;
+  max-width: 702px;
+  min-width: 250px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  border: 1px solid #E5E7EB;
+  margin-top: 16px;
+  padding: 20px;
+}
+
+.TFTextCont h2{
+font-weight: 600;
+font-size: 24px;
+color: #1F2937;
+}
+
+.TFTextCont textarea::placeholder{
+  font-weight: 400;
+  font-size: 16px;
+  color: #adaebccb;
+}
+
+.TFTextCont textarea:focus{
+  outline: none;
+}
+
+.TFButtonCont {
+  display: flex;
+  gap: 20px;
+  height: 64px;
+}
+
+.saveButton,
+.cancelButton {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 20px 50px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+}
+
+.saveButton {
+  color: white;
+  background: linear-gradient(90deg, rgba(127, 219, 202, 1) 0%, rgba(135, 206, 235, 1) 100%);
+  border: 0;
+}
+
+.saveButton:hover {
+  background: linear-gradient(90deg, rgba(135, 206, 235, 1) 0%, rgba(135, 206, 235, 1) 100%);
+}
+
+.cancelButton {
+  color: #4B5563;
+  border: 2px solid #D1D5DB;
+  background: none;
+}
+
+.cancelButton:hover {
+  background-color: #d1d5db3d;
+}
