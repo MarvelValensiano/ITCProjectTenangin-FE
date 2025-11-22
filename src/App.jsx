@@ -5,6 +5,7 @@ import CheckMood from './pages/CheckMood'
 import Login from './pages/Login'
 import Register from './pages/Register';
 import Home from "./pages/Home";
+import VideosPage from "./pages/Videos";
 import { Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/About" element={<About />} />
       <Route path='/CheckMood' element={<CheckMood />} />
+      <Route path="/videos" element={<VideosPage />} />
       <Route path="/home" element={<Home />} />
     </Routes>
   )
