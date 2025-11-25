@@ -35,12 +35,7 @@ async function parseJsonSafe(res) {
   }
 }
 
-/**
- * Generic fetch wrapper untuk semua endpoint auth.
- * Di sini kita bedakan:
- * - ada token + message mengandung "expired" => SESSION EXPIRED → redirect /login?expired=1
- * - tidak ada token => cuma "belum login", JANGAN pakai expired banner
- */
+/** generic fetch wrapper */
 async function rawFetch(path, options = {}) {
   const url = `${API_BASE}${path}`;
   const fetchOpts = {
@@ -49,6 +44,8 @@ async function rawFetch(path, options = {}) {
     credentials: options.credentials || "include",
     body: options.body ? JSON.stringify(options.body) : undefined,
   };
+
+  // set JSON header if body and not provided
   if (fetchOpts.body && !fetchOpts.headers["Content-Type"]) {
     fetchOpts.headers["Content-Type"] = "application/json";
   }
@@ -56,42 +53,53 @@ async function rawFetch(path, options = {}) {
   const res = await fetch(url, fetchOpts);
   const data = await parseJsonSafe(res);
 
-  if (!res.ok) {
-    const status = res.status;
-    const msgRaw = data?.message || data?.error || data?.raw || "";
-    const msg = String(msgRaw).toLowerCase();
-    const hasToken = !!getAccessToken();
+  // ===== SESSION / TOKEN EXPIRED HANDLER =====
+  // Hanya perlakukan sebagai "session expired" kalau:
+  // - sudah ada accessToken tersimpan, DAN
+  // - status 401/403 ATAU pesan error mengandung kata "expired" / "jwt"
+  const storedToken = getAccessToken();
+  const rawMessage =
+    (data && (data.message || data.error || data.detail || data.raw)) || "";
+  const msg = String(rawMessage).toLowerCase();
 
-    const looksExpired =
-      status === 401 ||
-      status === 403 ||
-      msg.includes("expired") ||
-      msg.includes("jwt") ||
-      msg.includes("token kadaluarsa");
+  const looksExpired =
+    msg.includes("expired") ||
+    msg.includes("jwt expired") ||
+    msg.includes("token kadaluarsa");
 
-    // Hanya kalau MASIH ADA token & kelihatan expired -> paksa expired flow
-    if (hasToken && looksExpired) {
-      console.warn("[auth] session expired detected from", path);
-      clearAuthStorage();
+  if (storedToken && (res.status === 401 || res.status === 403 || looksExpired)) {
+    console.warn("[AUTH] Session expired detected, clearing storage and redirecting to login");
 
+    // bersihkan storage
+    clearAuthStorage();
+
+    // redirect ke halaman login dengan informasi session habis
+    try {
       if (typeof window !== "undefined") {
-        const loc = window.location;
-        const pathNow = loc.pathname.toLowerCase();
-        const searchNow = loc.search.toLowerCase();
-        if (!(pathNow === "/login" && searchNow.includes("expired=1"))) {
+        // hindari loop tak berujung jika sudah di /login?expired=1
+        const currentPath = window.location.pathname.toLowerCase();
+        const currentSearch = window.location.search || "";
+        if (
+          currentPath !== "/login" ||
+          !currentSearch.toLowerCase().includes("expired=1")
+        ) {
           window.location.href = "/login?expired=1";
         }
       }
-
-      const err = new Error("Session expired");
-      err.status = status;
-      err.data = data;
-      throw err;
+    } catch (e) {
+      console.error("[AUTH] Redirect after session expired failed:", e);
     }
 
-    // selain itu: unauthorized biasa (belum login / token sudah dibersihkan)
-    const err = new Error(data?.message || `HTTP ${status}`);
-    err.status = status;
+    const err = new Error("Session expired");
+    err.status = res.status;
+    err.data = data;
+    throw err;
+  }
+
+  // ===== ERROR UMUM =====
+  if (!res.ok) {
+    const err = new Error(data?.message || `HTTP ${res.status}`);
+    err.status = res.status;
     err.data = data;
     throw err;
   }
@@ -99,11 +107,12 @@ async function rawFetch(path, options = {}) {
   return data;
 }
 
-/** AUTH helpers */
+/** AUTH helpers (adapt URLs if berbeda) */
 
 /**
  * Register
  * backend sample expects: { nama, email, password, confirm }
+ * NOTE: field 'nama' used per backend sample — if your backend expects 'name', change payload key.
  */
 export async function register({ nama, email, password, confirm }) {
   const data = await rawFetch("/api/auth/register", {
@@ -111,6 +120,7 @@ export async function register({ nama, email, password, confirm }) {
     body: { nama, email, password, confirm },
     credentials: "include",
   });
+  // if backend returns token/user on register, store it (if not, skip)
   if (data?.accessToken) setAccessToken(data.accessToken);
   if (data?.user) setUser(data.user);
   return data;
@@ -134,6 +144,8 @@ export async function login({ email, password }) {
 
 /**
  * Get user data (assume /api/auth/me).
+ * If your backend uses a different path, change it here.
+ * This uses Authorization header Bearer token (from localStorage) AND credentials include (as backend used).
  */
 export async function getUserData() {
   const token = getAccessToken();
@@ -144,10 +156,11 @@ export async function getUserData() {
     headers,
     credentials: "include",
   });
+  // optionally update stored user
   if (data?.user || data?.id) {
+    // unify common shapes: if backend returns data.user or top-level fields
     const userObj =
-      data.user ||
-      ({ id: data.id, username: data.username, email: data.email, ...data });
+      data.user || { id: data.id, username: data.username, email: data.email, ...data };
     setUser(userObj);
   }
   return data;
@@ -155,6 +168,8 @@ export async function getUserData() {
 
 /**
  * Refresh access token
+ * Backend sample used body { id_user } — we follow that.
+ * Adjust path if backend uses a different refresh endpoint.
  */
 export async function refreshAccessToken() {
   const stored = getStoredUser();
@@ -175,7 +190,6 @@ export async function logout() {
   const stored = getStoredUser();
   try {
     if (stored?.id) {
-      // kalau ini 401 karena token sudah mati, biarin; kita tetap clear storage di bawah
       await rawFetch("/api/auth/logout", {
         method: "POST",
         body: { id_user: stored.id },
@@ -183,6 +197,7 @@ export async function logout() {
       });
     }
   } catch (err) {
+    // ignore server errors for logout, still clear storage
     console.warn("Logout request failed:", err);
   }
   clearAuthStorage();

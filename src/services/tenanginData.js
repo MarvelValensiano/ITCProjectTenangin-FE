@@ -7,53 +7,48 @@ const API_BASE = (
 ).replace(/\/$/, "");
 
 /**
- * Helper: deteksi token expired / unauthorized untuk endpoint yang pakai Authorization.
+ * Helper: deteksi token expired di response mana pun yang pakai Authorization,
+ * lalu redirect ke /login?expired=1
  */
 function handleSessionExpired(res, payload) {
   const status = res.status;
   const rawMessage =
-    (payload &&
-      (payload.message || payload.error || payload.detail || payload.raw)) ||
+    (payload && (payload.message || payload.error || payload.detail || payload.raw)) ||
     "";
   const msg = String(rawMessage).toLowerCase();
 
-  const looksAuthError =
+  const looksExpired =
     status === 401 ||
     status === 403 ||
     msg.includes("expired") ||
     msg.includes("jwt") ||
     msg.includes("token kadaluarsa");
 
-  if (!looksAuthError) return;
+  if (!looksExpired) return;
 
-  const hasToken = !!getAccessToken();
+  console.warn("[tenanginData] Session expired detected");
+
   clearAuthStorage();
-
   if (typeof window !== "undefined") {
-    const loc = window.location;
-    const pathNow = loc.pathname.toLowerCase();
-    const searchNow = loc.search.toLowerCase();
-
-    const target = hasToken ? "/login?expired=1" : "/login";
-
-    // jangan spam redirect kalau sudah di halaman login yang sama
-    if (
-      !(
-        pathNow === "/login" &&
-        (hasToken ? searchNow.includes("expired=1") : true)
-      )
-    ) {
-      window.location.href = target;
+    const path = window.location.pathname.toLowerCase();
+    const search = window.location.search.toLowerCase();
+    if (!(path === "/login" && search.includes("expired=1"))) {
+      window.location.href = "/login?expired=1";
     }
   }
 
-  const err = new Error(hasToken ? "Session expired" : "Not authenticated");
+  const err = new Error("Session expired");
   err.status = status;
   err.data = payload;
   throw err;
 }
 
 /** ==== SEND PUBLIC MESSAGE (About Page) ==== */
+/**
+ * POST /pesan-publik
+ * body: { nama, email, pesan }
+ * TIDAK memakai Authorization header
+ */
 export async function sendPublicMessage({ nama, email, pesan }) {
   const url = `${API_BASE}/pesan-publik`;
 
@@ -79,7 +74,7 @@ export async function sendPublicMessage({ nama, email, pesan }) {
     throw err;
   }
 
-  return payload;
+  return payload; // success response
 }
 
 /** ==== SAVE USER MOOD ==== */
@@ -103,7 +98,7 @@ export async function saveUserMood({ mood, note }) {
     payload = { raw: text };
   }
 
-  // cek expired / belum login
+  // 🔥 cek token expired di sini
   handleSessionExpired(res, payload);
 
   if (!res.ok) {
@@ -139,7 +134,7 @@ export async function fetchUserQuote() {
     payload = { raw: text };
   }
 
-  // cek expired / belum login
+  // 🔥 cek token expired di sini juga
   handleSessionExpired(res, payload);
 
   if (!res.ok) {
@@ -150,5 +145,6 @@ export async function fetchUserQuote() {
     throw err;
   }
 
+  // backend-mu sebelumnya return payload.data
   return payload.data;
 }

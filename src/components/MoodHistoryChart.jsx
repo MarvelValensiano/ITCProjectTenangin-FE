@@ -10,123 +10,81 @@ import {
   CartesianGrid,
 } from "recharts";
 
-const SCORE_EMOJI = {
-  0: "😡",
-  1: "😟",
-  2: "😕",
-  3: "😐",
-  4: "🙂",
-  5: "😄",
-};
+/**
+ * Expect data in shape:
+ * [{ date: '2025-11-12', mood: 'Happy' }, ...]
+ * Or fallback to items with created_at property.
+ */
 
-const SCORE_LABEL = {
-  0: "Very low",
-  1: "Low",
-  2: "Quite low",
-  3: "Neutral",
-  4: "Good",
-  5: "Very good",
+const MOOD_SCORE = {
+  Happy: 5,
+  Excited: 5,
+  Calm: 4,
+  Neutral: 3,
+  Sad: 2,
+  Angry: 1,
+  Stressed: 1,
 };
 
 function parseDateLabel(dateStr) {
   try {
     const d = new Date(dateStr);
-    return d.toLocaleDateString(undefined, {
-      month: "short",
-      day: "numeric",
-    });
+    // short label: Nov 12 or 12 Nov depending preference:
+    return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
   } catch {
     return dateStr;
   }
 }
 
-// Custom tooltip supaya informasi lebih jelas
-function MoodTooltip({ active, payload }) {
-  if (!active || !payload || !payload.length) return null;
-  const point = payload[0].payload; // { date, mood, value }
-
-  const score = point.value;
-  const emoji = SCORE_EMOJI[score] || "";
-  const label = SCORE_LABEL[score] || "";
-  const dateLabel = parseDateLabel(point.date);
-
-  return (
-    <div className="chart-tooltip">
-      <div className="chart-tooltip-date">{dateLabel}</div>
-      {point.mood && (
-        <div className="chart-tooltip-mood">
-          <span className="chart-tooltip-emoji" aria-hidden="true">
-            {emoji}
-          </span>
-          <span className="chart-tooltip-text">
-            {point.mood} ({label || "Mood"})
-          </span>
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default function MoodHistoryChart({ data = [] }) {
-  // data dari Home sudah shape: [{ date, mood, value }]
-  const normalized = Array.isArray(data)
-    ? data
-        .filter((d) => d && d.date)
-        .map((d) => ({
-          ...d,
-        }))
-    : [];
+  // normalize to daily points (if backend returns many records per day, we take last/mode/avg)
+  // group by date
+  const grouped = {};
+  for (const item of data) {
+    const rawDate = item.date || item.created_at || item.day || item.timestamp;
+    if (!rawDate) continue;
+    const dKey = rawDate.split("T")[0]; // get YYYY-MM-DD
+    // keep last entry for the day (or you could average)
+    grouped[dKey] = item;
+  }
+  // convert to sorted array by date
+  const arr = Object.keys(grouped)
+    .sort((a, b) => new Date(a) - new Date(b))
+    .map((d) => {
+      const moodLabel =
+        grouped[d].mood ||
+        grouped[d].label ||
+        grouped[d].value_label ||
+        "Neutral";
+      const score = MOOD_SCORE[moodLabel] ?? MOOD_SCORE["Neutral"];
+      return {
+        date: d,
+        label: parseDateLabel(d),
+        value: score,
+        mood: moodLabel,
+      };
+    });
 
-  const hasAny = normalized.some((d) => d.value != null);
-
+  // If no data, keep empty arr (parent should provide fallback)
   return (
     <div className="chart-card">
-      <div className="chart-header">
-        <h3 className="chart-title">Your Mood History</h3>
-        <p className="chart-subtitle">Last 7 days</p>
-      </div>
-
-      {!hasAny ? (
-        <p className="chart-empty">
-          You don&apos;t have any mood data for this week yet.
-        </p>
-      ) : (
-        <div className="chart-container">
-          <ResponsiveContainer width="100%" height={240}>
-            <LineChart data={normalized}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis
-                dataKey="date"
-                tickFormatter={parseDateLabel}
-                tick={{ fontSize: 11 }}
-                interval={0}
-              />
-              <YAxis
-                domain={[0, 5]}
-                ticks={[0, 1, 2, 3, 4, 5]}
-                tickFormatter={(v) => SCORE_EMOJI[v] || ""}
-                tick={{ fontSize: 12 }}
-              />
-              <Tooltip content={<MoodTooltip />} />
-              <Line
-                type="monotone"
-                dataKey="value"
-                stroke="#7FDBCA"
-                strokeWidth={2}
-                dot={{ r: 4 }}
-                activeDot={{ r: 6 }}
-                connectNulls={false}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      )}
-
-      <div className="chart-legend">
-        <span className="chart-legend-title">Scale:</span>
-        <span className="chart-legend-item">
-          😡 / 😟 = low • 😕 / 😐 = medium • 🙂 / 😄 = high
-        </span>
+      <h3 className="chart-title">Your Mood History</h3>
+      <div className="chart-container">
+        <ResponsiveContainer width="100%" height={240}>
+          <LineChart data={data.map((d) => ({ date: d.date, value: d.value }))}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis domain={[0, 5]} />
+            <Tooltip />
+            <Line
+              type="monotone"
+              dataKey="value"
+              stroke="#7FDBCA"
+              dot={{ r: 4 }}
+              connectNulls={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );

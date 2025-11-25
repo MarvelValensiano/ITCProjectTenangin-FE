@@ -472,6 +472,21 @@
 }
 
 /* ========================================================================= */
+/*                               GRID LAYOUT                                 */
+/* ========================================================================= */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 14px;
+}
+
+.grid-videos {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+/* ========================================================================= */
 /*                VIDEO CARD HEIGHT NORMALIZATION + BUTTON ALIGNMENT         */
 /* ========================================================================= */
 
@@ -520,21 +535,6 @@
 /* Actions dorong ke bawah agar tombol sejajar */
 .actions {
   margin-top: auto;
-}
-
-/* ========================================================================= */
-/*                               GRID LAYOUT                                 */
-/* ========================================================================= */
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-  margin-top: 14px;
-}
-
-.grid-videos {
-  animation: fadeInUp 0.3s ease-out;
 }
 
 /* ========================================================================= */

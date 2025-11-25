@@ -6,33 +6,26 @@ import "../styles/LandingPage.css";
 import { SiteInfoA } from "../components/SiteInfo";
 import Footer from "../components/Footer";
 import { fetchUserQuote } from "../services/tenanginData";
-import { getAccessToken } from "../services/auth";
 
 function LandingPage() {
   const [quote, setQuote] = useState(null);
 
   useEffect(() => {
-    const token = getAccessToken();
-
-    // 🚫 Jika user belum login → jangan fetch quote
-    if (!token) {
-      console.log("LandingPage: no token → skip fetchUserQuote");
-      return;
-    }
-
     (async () => {
       try {
         const q = await fetchUserQuote();
         setQuote(q);
       } catch (err) {
-        // Diam saja supaya landing tetap aman
+        // kalau endpoint butuh login / gagal, kita diam saja supaya landing tetap jalan
         console.error("[LandingPage] fetchUserQuote error:", err);
       }
     })();
   }, []);
 
   return (
-    <div style={{ background: "linear-gradient(0deg, #ffffff 0%, #D9EFF7 100%)" }}>
+    <div
+      style={{ background: "linear-gradient(0deg, #ffffff 0%, #D9EFF7 100%)" }}
+    >
       <Navbar />
       <div className="LPcontent">
         <div className="LPCont1">
@@ -44,7 +37,6 @@ function LandingPage() {
             brightens your day.
           </p>
 
-          {/* tampilkan quote hanya kalau user login */}
           {quote && (
             <p className="LPQuote">“{quote.quote}”</p>
           )}

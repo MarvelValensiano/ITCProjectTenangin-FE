@@ -4,46 +4,36 @@ import { getAccessToken, clearAuthStorage } from "./auth";
 const API_BASE = (import.meta.env.VITE_API_BASE_URL || "https://projek-itc-tenangin.vercel.app").replace(/\/$/, "");
 
 /**
- * Helper: deteksi unauthorized / token expired.
+ * Helper: deteksi token expired dan redirect ke login.
  */
 function handleSessionExpired(res, payload) {
   const status = res.status;
   const rawMessage =
-    (payload &&
-      (payload.message || payload.error || payload.detail || payload.raw)) ||
+    (payload && (payload.message || payload.error || payload.detail || payload.raw)) ||
     "";
   const msg = String(rawMessage).toLowerCase();
 
-  const looksAuthError =
+  const looksExpired =
     status === 401 ||
     status === 403 ||
     msg.includes("expired") ||
     msg.includes("jwt") ||
     msg.includes("token kadaluarsa");
 
-  if (!looksAuthError) return;
+  if (!looksExpired) return;
 
-  const hasToken = !!getAccessToken();
+  console.warn("[videos] Session expired detected");
+
   clearAuthStorage();
-
   if (typeof window !== "undefined") {
-    const loc = window.location;
-    const pathNow = loc.pathname.toLowerCase();
-    const searchNow = loc.search.toLowerCase();
-
-    const target = hasToken ? "/login?expired=1" : "/login";
-
-    if (
-      !(
-        pathNow === "/login" &&
-        (hasToken ? searchNow.includes("expired=1") : true)
-      )
-    ) {
-      window.location.href = target;
+    const path = window.location.pathname.toLowerCase();
+    const search = window.location.search.toLowerCase();
+    if (!(path === "/login" && search.includes("expired=1"))) {
+      window.location.href = "/login?expired=1";
     }
   }
 
-  const err = new Error(hasToken ? "Session expired" : "Not authenticated");
+  const err = new Error("Session expired");
   err.status = status;
   err.data = payload;
   throw err;
@@ -51,20 +41,19 @@ function handleSessionExpired(res, payload) {
 
 /**
  * Ambil video rekomendasi berdasarkan latest mood user.
+ * Mengirim Authorization Bearer <token>.
+ * Mengembalikan object { data: [...] } atau throw error.
  */
 export async function fetchUserVideos() {
   const token = getAccessToken();
 
-  // Tidak ada token sama sekali => user belum login / sudah logout.
+  // kalau tidak ada token sama sekali, anggap session sudah berakhir
   if (!token) {
     clearAuthStorage();
     if (typeof window !== "undefined") {
-      const pathNow = window.location.pathname.toLowerCase();
-      if (!pathNow.startsWith("/login")) {
-        window.location.href = "/login"; // TANPA expired
-      }
+      window.location.href = "/login?expired=1";
     }
-    throw new Error("Not authenticated");
+    throw new Error("Session expired");
   }
 
   const url = `${API_BASE}/api/data/user_video`;
@@ -86,7 +75,7 @@ export async function fetchUserVideos() {
     payload = { raw: text };
   }
 
-  // cek auth / expired
+  // 🔥 cek token expired lebih dulu
   handleSessionExpired(res, payload);
 
   if (!res.ok) {

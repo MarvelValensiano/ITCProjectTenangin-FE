@@ -19,6 +19,7 @@ const MOOD_MAP = {
   Excited: "😍",
 };
 
+// scale untuk chart: makin tinggi = mood makin baik
 const MOOD_SCALE = {
   Happy: 5,
   Excited: 5,
@@ -32,7 +33,8 @@ const MOOD_SCALE = {
 export default function Home() {
   const [user, setUser] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
-  const [moods, setMoods] = useState([]); // [{ date, mood, value }]
+  // moods: array of { date: 'YYYY-MM-DD', mood: 'Happy' | null, value: number | null }
+  const [moods, setMoods] = useState([]);
   const [today, setToday] = useState({
     mood: { label: "Neutral", emoji: MOOD_MAP["Neutral"] },
     dateText: "",
@@ -46,9 +48,10 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function loadDashboard() {
+  const loadDashboard = async () => {
     const token = getAccessToken();
     if (!token) {
+      // kalau tidak ada token, pakai dummy kosong
       setFallbackSeries();
       return;
     }
@@ -69,145 +72,168 @@ export default function Home() {
         body: JSON.stringify({}),
       });
 
-      const json = await res.json().catch(() => ({}));
+      const json = await res.json();
+
       if (!res.ok) {
-        // === DETEKSI TOKEN EXPIRED ===
-        if (res.status === 401 || res.status === 403) {
-          console.warn("Session expired from Home.jsx");
-          window.location.href = "/login?expired=1";
-          return;
-        }
-    
         const msg = json?.message || `HTTP ${res.status}`;
         throw new Error(msg);
-    }    
+      }
 
-      const data = json?.data || json;
-      handleDashboardData(data);
+      // 🔥 backend kamu hampir pasti balikin { data: {...} }
+      const payload = json?.data || json;
+
+      // kalau mau debug bentuk payload:
+      // console.log("[Home] dashboard payload:", payload);
+
+      handleDashboardData(payload);
     } catch (err) {
       console.error("[Home] loadDashboard error:", err);
       setFallbackSeries();
     }
-  }
+  };
 
-  function handleDashboardData(data) {
-    // ========= 1. PROFILE =========
-    if (data.username || data.email || data.foto_profile_url || data.fullname || data.nama) {
+  const handleDashboardData = (data) => {
+    // === 1. Profile / user info ===
+    if (data.username || data.email || data.foto_profile_url || data.nama) {
       setUser((prev) => ({
         ...prev,
+        // simpan username / nama kalau backend kirim
         username: data.username || prev?.username,
-        nama: data.fullname || data.nama || prev?.nama,
+        nama: data.nama || prev?.nama,
         email: data.email || prev?.email,
       }));
       if (data.foto_profile_url) setAvatarUrl(data.foto_profile_url);
     }
 
-    // ========= 2. MOODS =========
+    // === 2. Mood history → map by date ===
     const moodRecords = Array.isArray(data.moods) ? data.moods : [];
-
-    // id → created_at ISO (UTC) untuk dipakai Today card
-    const isoById = {};
-    // per tanggal (lokal) → mood terbaru di hari itu
-    const perDayNewest = {}; // { "YYYY-MM-DD": { label, ts } }
+    const mapByDate = {};
 
     for (const r of moodRecords) {
-      const created = r.created_at || r.date || r.timestamp;
-      if (!created) continue;
+      const raw = r.date || r.created_at || r.timestamp || null;
+      if (!raw) continue;
 
-      const d = new Date(created);
-      if (Number.isNaN(d.getTime())) continue;
+      // ambil bagian tanggal YYYY-MM-DD
+      const day =
+        typeof raw === "string" && raw.includes("T")
+          ? raw.split("T")[0]
+          : raw;
 
-      const dayKey = getISODate(d); // tanggal lokal
-      const label = normalizeMoodLabel(
-        r.mood || r.label || r.value_label || r.name
-      );
-      const ts = d.getTime();
+      // normalisasi label mood
+      const label =
+        r.mood || r.label || r.value_label || r.name || "Neutral";
 
-      if (r.id) {
-        isoById[r.id] = created; // simpan ISO per id
-      }
-
-      if (!perDayNewest[dayKey] || ts > perDayNewest[dayKey].ts) {
-        perDayNewest[dayKey] = { label, ts };
-      }
+      mapByDate[day] = label;
     }
 
+    // === 3. Build series 7 hari terakhir untuk chart ===
     const DAYS = 7;
     const todayISO = getISODate(new Date());
     const series = [];
     let checkedToday = false;
 
     for (let i = DAYS - 1; i >= 0; i--) {
-      const day = addDaysISO(todayISO, -i);
-      const entry = perDayNewest[day];
+      const d = addDaysISO(todayISO, -i);
+      const label = mapByDate[d] || null;
 
-      if (entry) {
-        const value = MOOD_SCALE[entry.label] ?? MOOD_SCALE["Neutral"];
-        series.push({ date: day, mood: entry.label, value });
-        if (day === todayISO) checkedToday = true;
+      if (label) {
+        const normalizedLabel = normalizeMoodLabel(label);
+        const value =
+          MOOD_SCALE[normalizedLabel] ?? MOOD_SCALE["Neutral"];
+
+        series.push({
+          date: d,
+          mood: normalizedLabel,
+          value,
+        });
+
+        if (d === todayISO) checkedToday = true;
       } else {
-        series.push({ date: day, mood: null, value: null });
+        // tidak ada record hari itu
+        series.push({
+          date: d,
+          mood: null,
+          value: null,
+        });
       }
     }
 
     setMoods(series);
     setHasCheckedToday(checkedToday);
 
-    // ========= 3. TODAY'S CARD =========
+    // === 4. Today card ===
     if (data.latest_mood) {
+      // backend kirim latest_mood object
       const lab = normalizeMoodLabel(
-        data.latest_mood.mood || data.latest_mood.label || "Neutral"
+        data.latest_mood.mood ||
+          data.latest_mood.label ||
+          "Neutral"
       );
 
-      const latestId = data.latest_mood.id;
-      // PRIORITAS: pakai ISO dari moods[id] → sehingga timezone jelas (UTC → lokal)
-      let when =
-        (latestId && isoById[latestId]) ||
-        data.latest_mood.created_at ||
-        data.latest_mood.date ||
-        (checkedToday
-          ? series.find((s) => s.date === todayISO && s.mood)?.date
-          : "");
-
       setToday({
-        mood: { label: lab, emoji: MOOD_MAP[lab] || "🙂" },
-        dateText: when ? formatDateHuman(when) : "",
+        mood: {
+          label: lab,
+          emoji: MOOD_MAP[lab] || "🙂",
+        },
+        dateText: formatDateHuman(
+          data.latest_mood.created_at || data.latest_mood.date
+        ),
       });
     } else if (checkedToday) {
-      const t = series.find((s) => s.date === todayISO && s.mood);
-      if (t) {
+      // kalau tidak ada latest_mood khusus, tapi di history ada record hari ini
+      const todayRec = series.find(
+        (s) => s.date === todayISO && s.mood
+      );
+      if (todayRec) {
         setToday({
-          mood: { label: t.mood, emoji: MOOD_MAP[t.mood] || "🙂" },
+          mood: {
+            label: todayRec.mood,
+            emoji: MOOD_MAP[todayRec.mood] || "🙂",
+          },
           dateText: `Checked on ${todayISO}`,
         });
       } else {
         setToday({
-          mood: { label: "Neutral", emoji: MOOD_MAP["Neutral"] },
+          mood: {
+            label: "Neutral",
+            emoji: MOOD_MAP["Neutral"],
+          },
           dateText: "",
         });
       }
     } else {
+      // sama sekali belum check hari ini
       setToday({
-        mood: { label: "Neutral", emoji: MOOD_MAP["Neutral"] },
+        mood: {
+          label: "Neutral",
+          emoji: MOOD_MAP["Neutral"],
+        },
         dateText: "",
       });
     }
-  }
+  };
 
-  function setFallbackSeries() {
+  const setFallbackSeries = () => {
     const todayISO = getISODate(new Date());
     const DAYS = 7;
     const mock = [];
+
     for (let i = DAYS - 1; i >= 0; i--) {
-      mock.push({ date: addDaysISO(todayISO, -i), mood: null, value: null });
+      const d = addDaysISO(todayISO, -i);
+      mock.push({
+        date: d,
+        mood: null,
+        value: null,
+      });
     }
+
     setMoods(mock);
     setHasCheckedToday(false);
     setToday({
       mood: { label: "Neutral", emoji: MOOD_MAP["Neutral"] },
       dateText: "",
     });
-  }
+  };
 
   const handleCheckMood = () => {
     window.location.href = "/CheckMood";
@@ -218,9 +244,15 @@ export default function Home() {
       <Navbar avatarUrl={avatarUrl} />
       <main className="home-container">
         <HomeHeader
-          userName={user?.nama || user?.username || user?.name || "User"}
+          userName={
+            user?.nama ||
+            user?.username ||
+            user?.name ||
+            "User"
+          }
           onCheckMood={handleCheckMood}
         />
+
         <div className="home-grid">
           <MoodHistoryChart data={moods} />
           <TodayMoodCard
@@ -236,8 +268,7 @@ export default function Home() {
   );
 }
 
-/* ================= helpers ================= */
-
+/* ===== helpers ===== */
 function normalizeMoodLabel(raw) {
   if (!raw) return "Neutral";
   const r = String(raw).trim();
@@ -247,12 +278,14 @@ function normalizeMoodLabel(raw) {
   return key;
 }
 
-// LOCAL date (nggak pakai UTC offset)
 function getISODate(d = new Date()) {
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
+  return new Date(
+    d.getFullYear(),
+    d.getMonth(),
+    d.getDate()
+  )
+    .toISOString()
+    .split("T")[0];
 }
 
 function addDaysISO(dateISO, delta = 0) {
@@ -261,24 +294,17 @@ function addDaysISO(dateISO, delta = 0) {
   return getISODate(d);
 }
 
-// Konversi ke waktu lokal browser (GMT+7 di laptop kamu)
-// value boleh ISO "2025-11-24T17:41:46.151131+00:00"
-function formatDateHuman(value) {
-  if (!value) return "";
-
-  const d = new Date(value);
-  if (Number.isNaN(d.getTime())) {
-    // kalau stringnya aneh & nggak bisa diparse, tampilkan apa adanya
-    return String(value);
+function formatDateHuman(iso) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleString(undefined, {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  } catch {
+    return iso;
   }
-
-  return d.toLocaleString(undefined, {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 }
-
-
