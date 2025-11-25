@@ -103,3 +103,51 @@ ul{
     list-style: none;
 }
 
+.nav-avatar {
+  display: flex;
+  align-items: center;
+}
+
+.nav-avatar-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 30px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-avatar-img:hover {
+  filter: brightness(0.85);
+}
+
+.menu ul li {
+  display: flex;
+  align-items: center;
+}
+
+.logoutBtn {
+    border-radius: 30px;
+    border: 0;
+    width: 168px;
+    height: 48px;
+    background: linear-gradient(90deg, rgba(127, 219, 202, 1) 0%, rgba(135, 206, 235, 1) 100%);
+    transition: all 0.4s ease;
+    font-size: 16px;
+    color: white;
+    font-family: plus jakarta sans;
+    cursor: pointer;
+}
+
+.logoutBtn:hover {
+    background: linear-gradient(90deg, rgba(135, 206, 235, 1) 0%, rgba(135, 206, 235, 1) 100%);
+    transform: scale(0.97);
+}
+
+.menu ul li.nav-avatar {
+    margin-right: 8px !important;
+}
+
+.logoutBtn {
+    margin-left: -8px;
+}
