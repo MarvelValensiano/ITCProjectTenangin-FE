@@ -1,0 +1,112 @@
+/* src/styles/Register.css */
+:root{
+    --accent: #7FDBCA;
+    --primary-grad: linear-gradient(90deg,#7ed7cd,#8fcff5);
+    --card-bg: #fff;
+    --muted: #f1f3f5;
+    --text: #111827;
+  }
+  
+  /* Consistent box-sizing */
+  * { box-sizing: border-box; }
+  
+  /* reuse container classes from page layout: auth-container, auth-card exist in page */
+  /* we only style the form specifics here */
+  
+  .form-inner {
+    max-width: 520px;
+    margin: 0;
+  }
+  
+  /* Make all inputs uniform (text, email, password) */
+  .field-label {
+    display:block;
+    font-size:13px;
+    color:#6b7280;
+    margin-bottom:8px;
+  }
+  
+  /* TARGET ALL inputs using .textfield class so consistent across types */
+  .textfield {
+    width:100%;
+    padding: 14px 16px;
+    margin-bottom:14px;
+    border-radius: 10px;
+    border: 1.5px solid rgba(30,40,45,0.12);
+    background: var(--muted);
+    font-size:15px;
+    transition: box-shadow .12s ease, border-color .12s ease, transform .12s ease;
+    outline: none;
+    color: #111;
+  }
+  
+  /* placeholder color */
+  .textfield::placeholder { color:#9aa3ad; opacity:1; }
+  
+  /* focus state */
+  .textfield:focus {
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px rgba(127,219,202,0.18), 0 0 0 3px rgba(127,219,202,0.08);
+    transform: translateY(-1px);
+  }
+  
+  /* password wrapper: keep eye absolute and input with extra right padding */
+  .password-wrap {
+    position: relative;
+  }
+  .password-input {
+    padding-right: 46px; /* keep space for eye button */
+  }
+  
+  /* eye button: absolute, transparent, no border so it doesn't affect layout */
+  .eye-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    padding: 6px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+  .eye-btn svg { width:18px; height:18px; display:block; }
+  .eye-btn:focus { outline: none; box-shadow: 0 0 0 3px rgba(127,219,202,0.12); }
+  
+  /* hint & error */
+  .hint { display:block; font-size:12px; color:#9aa3ad; margin-top:-6px; margin-bottom:10px; }
+  .form-error { color:#b00020; background:#fff2f2; padding:8px 10px; border-radius:8px; margin-bottom:8px; }
+  
+  /* button */
+  .btn-primary {
+    width:100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: none;
+    background: var(--primary-grad);
+    color: white;
+    font-weight: 700;
+    margin-top: 6px;
+    cursor: pointer;
+    box-shadow: 0 12px 36px rgba(47,165,150,0.08);
+    transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+  }
+  .btn-primary:hover {
+    background: linear-gradient(90deg, rgba(135,206,235,1) 0%, rgba(135,206,235,1) 100%);
+    transform: scale(1.02);
+  }
+  
+  /* small separations and footer note */
+  .auth-sep { border:none; border-top:1px solid #e6eef3; margin:18px 0; }
+  .auth-footer-note { margin-top:12px; font-size:14px; color:#445; }
+  .auth-footer-note a { color: var(--accent); text-decoration:none; font-weight:700; }
+  
+  /* responsive */
+  @media (max-width: 820px) {
+    .form-inner { max-width:100%; padding: 0 8px; }
+    .password-input { padding-right: 46px; } /* keep same */
+  }
+  

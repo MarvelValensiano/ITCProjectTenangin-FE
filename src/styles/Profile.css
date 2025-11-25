@@ -1,0 +1,293 @@
+.profile{
+    margin: 25px 41px;
+    margin-bottom: 121px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.profile h1{
+    font-family: Plus Jakarta Sans;
+    font-weight: 700;
+    font-size: 40px;
+    color: #1F2937;
+}
+
+.yourProfile, .profileDetails{
+    padding: 30px;
+    border: 1px solid #87CEEB;
+    border-radius: 32px;
+    background: #FFFFFF;
+}
+
+.yourProfile{
+    display: flex;
+    gap: 40px;
+}
+
+.yourProfile h3, .yourProfile h4, .yourProfile p{
+    font-family: plus jakarta sans;  
+    color: #1F2937;  
+}
+
+.avatar{
+    position: relative;
+    margin: 22px;
+    display: inline-block;
+}
+
+.fotoAvatar{
+    width: 96px;
+    height: 96px;   
+    border-radius: 50%; 
+    object-fit: cover;
+}
+
+.iconEdit{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.iconEdit:hover{
+    filter: brightness(0.8);
+}
+
+
+.namaStatus{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.namaStatus h4{
+    font-family: Plus Jakarta Sans;
+    font-weight: 500;
+    font-size: 20px;
+    color: white;
+    background: linear-gradient(135deg, #B8E6B8 0%, #A8D8EA 70.71%);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.miniProfile{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.miniProfile h3{
+    font-size: 30px;
+}
+
+.miniProfile p{
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.detailsBox h5{
+font-family: Poppins;
+font-weight: 400;
+font-size: 14px;
+color: #6F6F6F;
+margin-bottom: 4px;
+}
+
+.detailsBox p{
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 16px;
+    color: #2B3A3A;
+}
+
+#PDTitle{
+    margin-top: 10px;
+}
+
+.detailsContent{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 50px;
+}
+
+.leftBox, .rightBox{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 370px;
+}
+
+.detailsBtn button{
+    width: 131px;
+    height: 48px;
+    border: none;
+    border-radius: 30px;
+    background: #FFE3D4;
+    transition: all 0.3s ease;
+}
+
+.detailsBtn button:hover{
+    transform: scale(0.97);
+}
+
+/* =======================
+   EDIT PROFILE FORM 
+   ======================= */
+
+.editProfileForm {
+  padding: 30px;
+  border: 1px solid #87CEEB;
+  border-radius: 32px;
+  background: #FFFFFF;
+  margin-top: -10px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.editProfileForm h2 {
+  font-family: Plus Jakarta Sans;
+  font-weight: 700;
+  font-size: 32px;
+  color: #1F2937;
+  margin-bottom: 8px;
+}
+
+.editProfileFormInner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.editGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+/* Dua kolom */
+.editColumn {
+  flex: 1;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Label */
+.editColumn label {
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 15px;
+  color: #2B3A3A;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Input & Select */
+.editColumn input,
+.editColumn select {
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid #87CEEB;
+  background: #FFFFFF;
+  font-family: Poppins;
+  font-size: 15px;
+  color: #1F2937;
+  transition: all 0.25s ease;
+}
+
+.editColumn input:focus,
+.editColumn select:focus {
+  outline: none;
+  border-color: #7FDBCA;
+  box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.3);
+}
+
+/* File Input */
+.editColumn input[type="file"] {
+  padding: 10px;
+  background: #F8FAFC;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+/* Tombol Action */
+.editActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.editActions button {
+  font-family: Poppins;
+  font-size: 15px;
+  padding: 12px 24px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.editActions button[type="button"] {
+  background: #FFE3D4;
+  color: #1F2937;
+}
+
+.editActions button[type="button"]:hover {
+  transform: scale(0.97);
+}
+
+.editActions button[type="submit"] {
+  background: linear-gradient(135deg, #B8E6B8 0%, #A8D8EA 70.71%);
+  color: #1F2937;
+  font-weight: 600;
+}
+
+.editActions button[type="submit"]:hover {
+  transform: scale(0.97);
+}
+
+/* Form Edit Profile: samakan semua input & textarea */
+
+.editProfileForm label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 14px;
+  color: #2B3A3A;
+}
+
+.editProfileForm input,
+.editProfileForm select,
+.editProfileForm textarea {
+  font-family: Poppins;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #87CEEB;
+  background: #F7FBFF;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.editProfileForm input:focus,
+.editProfileForm select:focus,
+.editProfileForm textarea:focus {
+  border-color: #7FDBCA;
+  box-shadow: 0 0 0 2px rgba(127, 219, 202, 0.3);
+}
+
+.editProfileForm textarea {
+  resize: vertical;
+  min-height: 80px;
+}

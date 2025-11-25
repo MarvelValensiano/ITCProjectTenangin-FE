@@ -1,0 +1,480 @@
+/*desc section============================*/
+
+.desc{
+    padding: 100px 41px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.descText{
+    max-width: 592px;
+    width: 100%;
+}
+
+.descText h1{
+    color: #1F2937;
+    font-size: 48px;
+}
+
+.descText h1 span{
+    color: #16A34A;
+}
+
+.descText h2{
+    font-weight: 400;
+    font-size: 20px;
+    color: #4B5563;
+    margin: 20px 0;
+}
+
+.descText p{
+    font-size: 16px;
+    color: #4B5563;
+}
+
+.descImg{
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.descImg img{
+    height: 320px;
+    width: 320px;
+    margin: 30px 0;
+}
+
+.descText button{
+    font-size: 16px;
+    font-weight: 500;
+    padding: 15px 30px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    border: 0;
+    background: linear-gradient(30deg, #A8E6CF 50%, #88D8E8 100.71%);
+    margin-top: 25px;
+    transition: all 0.3s ease;
+}
+
+.descText a{
+    color: white;
+}
+
+.descText button:hover {
+  background: linear-gradient(45deg, #88D8E8 50%, #88D8E8 120.71%);
+  box-shadow: 0px 0px 15px #cbecf3;
+}
+
+
+/*mission section============================*/
+
+.mission{
+    position: relative;
+    text-align: center;
+    padding: 100px 0;
+}
+
+.mission h2{
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #1F2937;
+}
+
+.missionBox{
+    position: relative;
+    border-radius: 24px;
+    width: 60%;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #000c6307;
+}
+
+.missionBox p{
+    text-align: center;
+    font-size: 20px;
+    z-index: 1;
+    position: relative;
+    color: #4B5563;
+}
+
+.iconLeft{
+    position: absolute;
+    top: -25px;
+    left: -25px;
+    width: 36px;
+    border: 0;
+}
+
+.iconBottom{
+    position: absolute;
+    bottom: -30px;
+    width: 36px;
+}
+
+.iconRight{
+    position: absolute;
+    top: -25px;
+    right: -25px;
+    width: 36px;
+}
+
+/*SDG3 section============================*/
+
+.SDG3{
+    background: linear-gradient(90deg, #FFFFFF 0%, #f3f3f7 100%);
+    padding: 80px;
+}
+
+.SDG3 h2{
+    font-size: 36px;
+    text-align: center;
+    color: #1F2937;
+}
+
+.SDG3Content{
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    align-items: center;
+    flex-wrap: wrap-reverse;
+    margin-top: 30px;
+}
+
+.SDG3Img{
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.SDG3Img img{
+    width: 192px;
+    height: 192px;
+    padding: 30px;
+    border-radius: 100%;
+    background: linear-gradient(135deg, #DBEAFE 0%, #dcfce7 70.71%);
+}
+
+.SDG3Text{
+    margin: 41px;
+    max-width: 528px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.SDG3Text h3{
+    font-weight: 600;
+    font-size: 24px;
+    color: #1F2937;
+}
+
+.SDG3Text p{
+    font-weight: 400;
+    font-size: 16px;
+    color: #4B5563;    
+}
+
+/*Tenangin Team section============================*/
+
+.tenanginTeam{
+    padding: 60px 41px;
+}
+
+.tenanginTeam{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.tenanginTeam h2{
+    color: #1F2937;
+    font-weight: 700;
+    font-size: 36px;
+    text-align: center;
+}
+
+.tenanginTeam p{
+    font-weight: 400;
+    font-size: 20px;
+    text-align: center;
+    color: #4B5563; 
+}
+
+.teamBox{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+.teamCard{
+    width: 220px;
+    height: 270px;
+    border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0px 10px 25px 0px #0000002c;
+}
+
+#kevin{
+    border-left: solid 4px #86EFAC;    
+}
+
+#kevin p{
+    color:  #16A34A;   
+}
+
+#marvel{
+    border-left: solid 4px #93C5FD;    
+}
+
+#marvel p{
+    color:  #2563EB;   
+}
+
+#fiernaz{
+    border-left: solid 4px #D8B4FE;    
+}
+
+#fiernaz p{
+    color: #9333EA;    
+}
+
+#fariz{
+    border-left: solid 4px #FDE047;    
+}
+
+#fariz p{
+    color: #CA8A04;    
+}
+
+#nahdia{
+    border-left: solid 4px #87CEEB;    
+}
+
+#nahdia p{
+    color: #0A7BAB;    
+}
+
+.teamCard img{
+    width: 96px;
+    border-radius: 100%;
+    margin-bottom: 10px;
+}
+
+.teamCard h6{
+    color: #1F2937;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.teamCard p{
+    font-weight: 500;
+    font-size: 16px;    
+}
+
+/*Purpose section============================*/
+
+.purpose{
+    background: linear-gradient(90deg, #e7faed 0%, #e4efff 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 80px 41px 50px 41px;
+}
+
+.purpose h2{
+    color: #1F2937;
+    font-size: 36px;
+    text-align: center;
+}
+
+.purpose p{
+    max-width: 826px;
+    text-align: center;
+    font-size: 20px;
+    color: #4B5563;
+}
+
+.purpose img{
+    max-width: 484px;
+    width: 100%;
+}
+
+/*Feedback section============================*/
+
+.feedback{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 80px 41px;
+}
+
+.feedback h2{
+    color: #1F2937;
+    font-size: 36px;
+    text-align: center;
+}
+
+.feedback p{
+    max-width: 826px;
+    text-align: center;
+    font-size: 20px;
+    color: #4B5563;
+}
+
+.feedbackBox{
+    background-color: #F9FAFB;
+    border-radius: 24px;
+    box-shadow: 0px 10px 25px 0px #00000014;
+    display: flex;
+    gap: 70px;
+    padding: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#messageName, #messageEmail{
+    height: 50px;
+}
+
+.messageForm, .socmed{
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.messageForm input, .messageForm textarea{
+    height: 25px;
+    border-radius: 10px;
+    border: 1px solid #E5E7EB;
+    padding: 10px 15px;
+    width: 100%;  
+}
+
+.messageForm textarea {
+  height: 146px;
+  resize: none;
+}
+
+
+.feedbackBox h3{
+    font-weight: 600;
+    line-height: 32px;
+    color: #1F2937;
+}
+
+.messageForm input::placeholder, .messageForm textarea::placeholder {
+  color: #ADAEBC;
+  font-size: 14px;
+}
+
+.messageForm input:focus, .messageForm textarea:focus {
+  outline: none;
+}
+
+.messageForm button{
+    background: linear-gradient(45deg, #A8E6CF 50%, #88D8E8 120.71%);
+    width: 181px;
+    height: 48px;
+    border-radius: 12px;
+    border: 0;
+    color: white;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.messageForm button:hover{
+    background: linear-gradient(90deg, #A8D8EA 0%, #A8D8EA 100%);
+}
+
+.socmed ul{
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.socmed a{
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #4B5563;
+    height: 48px;
+}
+
+.socmed a p{
+    transition: all 0.3s ease;
+}
+
+.socmed a p:hover{
+    color: #88D8E8;
+}
+
+.socmed img{
+    width: 16px;
+}
+
+#linkedin, #insta, #mail{
+    width: 48px;
+    height: 48px;
+    border-radius: 30px;
+    margin-right: 20px;
+    transition: all 0.3s ease;
+}
+
+#linkedin:hover, #insta:hover, #mail:hover{
+    width: 44px;
+    height: 44px;
+}
+
+#mail{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #DCFCE7;
+}
+
+#insta{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #DBEAFE;
+}
+
+#linkedin{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F3E8FF;
+}
+
+.socmed hr{
+    border: 1px solid #E5E7EB;
+    margin: 20px 0 10px 0;
+}
+
+.socmed p{
+    color: #4B5563;
+    font-size: 16px;
+    text-align: left;
+}
+
+
